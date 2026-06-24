@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  /* ... */
+}
+
+body {
+  background-color: #022329;
+}
+
+@layer base {
+  .font-outline-1 {
+    -webkit-text-stroke: 1px black;
+  }
+  .font-outline-4 {
+    -webkit-text-stroke: 4px black;
+  }
+}

@@ -1,5 +1,5 @@
 const navigateTo = url => {
-    history.pushState(null, null, null);
+    history.pushState(null, null, url);
     router();
 }
 
@@ -31,6 +31,12 @@ const router = async () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
-        // if e.target.matches("[data-link]")
-    })
+        if (e.target.matches("[data-link]") ){
+            e.preventDefault();
+            console.log(e.target.href)
+            navigateTo(e.target.href);
+        }
+    });
+
+    router();
 });
