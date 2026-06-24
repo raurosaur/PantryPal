@@ -56,10 +56,10 @@ const router = async () => {
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('button#search-recipe').addEventListener('click', e => {
         e.preventDefault();
-        console.log(e.target);
+        // console.log(e.target);
         let ref = e.target.dataset.href;
-        let input = document.querySelector('#recipe-search-bar').value;
-        navigateTo(`${ref}/?=${input.split(' ').join('&')}`);
+        let input = document.querySelector('#recipe-search-bar').value.trim();
+        navigateTo(`${ref}/?q=${encodeURIComponent(input)}`);
         });
 
     // document.body.addEventListener("click", e => {

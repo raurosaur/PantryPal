@@ -16,3 +16,7 @@ body {
     -webkit-text-stroke: 4px black;
   }
 }
+
+div.recipe-search-item{
+  @apply p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1 cursor-pointer;
+}
