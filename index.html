@@ -4,30 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="client/static/css/main.css">
+    <script type="module" src="client/static/js/index.js"></script>
     <title>Document</title>
 </head>
 <body>
     
-<div class="relative flex h-screen flex-col items-center justify-around p-10 font-sans text-white">
+<div class="relative flex h-screen flex-col items-center justify-around p-10 font-sans text-cyan-50">
   <div class="flex w-full min-w-sm items-center max-sm:flex-col">
     <h1 class="row-span-3 text-center text-4xl text-white sm:mr-15">PantryPal</h1>
     <div class="row-span-full grid grow grid-cols-[3fr_1fr] grid-rows-1 gap-y-2 p-4">
-      <input type="text" class="rounded-s-xl bg-white p-2 text-black" />
-      <button class="max-w-30 rounded-e-2xl bg-[#106978] p-2">Go</button>
+      <input type="text" class="rounded-s-xl bg-white p-2 text-black" placeholder="Search recipe..." id="recipe-search-bar"/>
+      <button class="max-w-30 rounded-e-2xl bg-[#106978] p-2" id="search-recipe" data-href="/recipe-search">GO!</button>
       <input type="text" class="rounded-s-xl bg-white p-2" />
       <button class="max-w-30 rounded-e-2xl bg-[#106978] p-2">Look</button>
     </div>
   </div>
 
-
-  
-  <div class="relative h-4/5 w-full min-w-sm rounded-xl bg-teal-400/25">
-    <div class="flex font-outline-1">
-      <div class="flex-1 rounded-tl-xl bg-amber-200/80 hover:bg-amber-200/60 p-1 text-center text-2xl font-extrabold border-black border-2">Recipes</div>
-      <div class="flex-1 rounded-tr-xl bg-amber-200/80 hover:bg-amber-200/60 p-1 text-center text-2xl font-extrabold border-black border-2">List</div>
+  <div class="relative flex h-4/5 w-full min-w-sm flex-col rounded-xl border border-cyan-300/20 shadow-2xl shadow-black/30">
+    <div class="font-outline-1 flex">
+      <div class="flex-1 rounded-tl-xl border-b border-r border-cyan-300/20 bg-cyan-300/10 p-2 text-center text-2xl font-extrabold hover:bg-cyan-300/20">Recipes</div>
+      <div class="flex-1 rounded-tr-xl border-b border-cyan-300/20 bg-cyan-300/10 p-2 text-center text-2xl font-extrabold hover:bg-amber-200/60">List</div>
     </div>
+
+    <section>
+
+    </section>
+    <!-- <div class="recipe-list-full flex flex-col overflow-y-auto min-h-0 flex-1 p-2">
+      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
+      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
+      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
+      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
+      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
+    </div> -->
   </div>
-  
 </div>
 </body>
 </html>
