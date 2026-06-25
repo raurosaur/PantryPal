@@ -1,6 +1,7 @@
 import AbstractView from "../views/AbstractView";
 import Dashboard from "../views/Dashboard";
 import RecipeSearchList from "../views/RecipeSearchList";
+import ShoppingList from  "../views/ShoppingList";
 
 const navigateTo = url => {
     history.pushState(null, null, url);
@@ -24,10 +25,10 @@ const router = async () => {
     const routes = [
         {path: "/" , view: AbstractView},
         // {path: "/recipe" , view: () => {console.log("2")}},
-        {path: "/recipe-search/" , view: RecipeSearchList},
+        {path: "/recipe-search" , view: RecipeSearchList},
         //recipe
         //
-        {path: "/list" , view: () => {console.log("3")}}
+        {path: "/list" , view: ShoppingList}
     ];
 
     const potentialMatches = routes.map( route => {
@@ -54,20 +55,22 @@ const router = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector('button#search-recipe').addEventListener('click', e => {
-        e.preventDefault();
-        // console.log(e.target);
-        let ref = e.target.dataset.href;
-        let input = document.querySelector('#recipe-search-bar').value.trim();
-        navigateTo(`${ref}/?q=${encodeURIComponent(input)}`);
-        });
-
-    // document.body.addEventListener("click", e => {
-    //     if (e.target.matches("[data-link]") ){
-    //         e.preventDefault();
-    //         navigateTo(e.target.href);
-    //     }
-    // });
+    document.body.addEventListener("click", e => {
+        if (e.target.id === "list-nav" ){
+            e.preventDefault();
+            navigateTo(e.target.dataset.href);
+        }
+        else if (e.target.id === "search-recipe" || e.target.id === "recipe-nav"){
+            e.preventDefault();
+            // console.log(e.target);
+            let ref = e.target.dataset.href;
+            let input = document.querySelector('#recipe-search-bar').value.trim();
+            if (input) {
+                ref += `?q=${encodeURIComponent(input)}`;
+            }
+            navigateTo(ref);
+        }  
+    });
 
     router();
 });

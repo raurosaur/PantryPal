@@ -6,11 +6,14 @@ const ID  = "d66e5273";
 export default class extends AbstractView{
     constructor(search){
         super();
-        this.setTitle("Dashboard");
+        this.setTitle("Recipes");
     }
 
     async getHtml(){
-
+        if (!location.search){
+           return ` <div class="recipe-list-full">
+        </div>`
+        }
         let req = `https://api.edamam.com/api/recipes/v2?type=public&${location.search.substring(1)}&app_id=${ID}&app_key=${KEY}`;
         
         const response = await fetch(req); 
@@ -24,6 +27,7 @@ export default class extends AbstractView{
         console.log(resBody)
         let innerHTML = "";
         const hits = resBody["hits"];
+        console.log(resBody)
         hits.forEach((hit,i) => {
             innerHTML += `<div class = "recipe-search-item" search-index=${i}>${hit.recipe.label} - ${hit.recipe.source}</div>`;
         });
@@ -31,7 +35,7 @@ export default class extends AbstractView{
             innerHTML += `<div style="recipe-search-item"> Search returned no result ☹️. Try Again!</div>`
 
         return `
-        <div class="recipe-list-full section-body">
+        <div class="recipe-list-full">
             ${innerHTML}
         </div>
         `;

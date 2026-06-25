@@ -22,41 +22,12 @@
 
   <div class="relative flex h-4/5 w-full min-w-sm flex-col rounded-xl border border-cyan-300/20 shadow-2xl shadow-black/30">
     <div class="font-outline-1 flex">
-      <div class="nav-bar rounded-tl-xl border-r" id='recipe-nav' data-state="disabled">Recipes</div>
-      <div class="nav-bar rounded-tr-xl " id='list-nav' data-state="disabled">List</div>
+      <div class="nav-bar rounded-tl-xl border-r" id='recipe-nav' data-state="disabled" data-href="/recipe-search">Recipes</div>
+      <div class="nav-bar rounded-tr-xl " id='list-nav' data-state="disabled" data-href="list">List</div>
     </div>
-    
-    <div class = "section-body">
-      <div class = "shopping-list">
-        <div class="flex justify-between">
-          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-          <label for="list${id}" id="label-list${id}">${item}</label>
-          <span id="span-${id}" class="hover:bg-cyan-900/80 rounded-xl">🗑</span>
-        </div>
-        <div class= "flex justify-between">
-          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-          <label for="list${id}" id="label-list${id}">${item}</label>
-          <span id="span-${id}">🗑</span>
-        </div>
-        <div class= "flex justify-between">
-          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-          <label for="list${id}" id="label-list${id}">${item}</label>
-          <span id="span-${id}">🗑</span>
-        </div>
-        <div class= "flex justify-between">
-          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-          <label for="list${id}" id="label-list${id}">${item}</label>
-          <span id="span-${id}">🗑</span>
-        </div>
-      </div>
-      <div class="list-action-bar w-full flex justify-between items-stretch text-center">
-        <div class="rounded-l-xl border-r">Save</div>
-        <div class="border-r">Delete</div>
-        <div class="rounded-r-xl">Share</div>
-      </div>
-    </div>
-    <!-- <section class = "section-body">
-    </section> -->
+
+    <section class = "section-body">
+    </section>
   </div>
 </div>
 </body>
