@@ -18,6 +18,9 @@ export default class extends AbstractView{
         
         const resBody  = await response.json();
         
+        document.querySelector('#recipe-nav').dataset.state = "active"
+        document.querySelector('#list-nav').dataset.state = "disabled"
+
         console.log(resBody)
         let innerHTML = "";
         const hits = resBody["hits"];
@@ -28,7 +31,7 @@ export default class extends AbstractView{
             innerHTML += `<div style="recipe-search-item"> Search returned no result ☹️. Try Again!</div>`
 
         return `
-        <div class="recipe-list-full flex flex-col overflow-y-auto min-h-0 max-h-120 flex-1 p-2">
+        <div class="recipe-list-full section-body">
             ${innerHTML}
         </div>
         `;

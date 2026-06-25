@@ -22,20 +22,41 @@
 
   <div class="relative flex h-4/5 w-full min-w-sm flex-col rounded-xl border border-cyan-300/20 shadow-2xl shadow-black/30">
     <div class="font-outline-1 flex">
-      <div class="flex-1 rounded-tl-xl border-b border-r border-cyan-300/20 bg-cyan-300/10 p-2 text-center text-2xl font-extrabold hover:bg-cyan-300/20">Recipes</div>
-      <div class="flex-1 rounded-tr-xl border-b border-cyan-300/20 bg-cyan-300/10 p-2 text-center text-2xl font-extrabold hover:bg-amber-200/60">List</div>
+      <div class="nav-bar rounded-tl-xl border-r" id='recipe-nav' data-state="disabled">Recipes</div>
+      <div class="nav-bar rounded-tr-xl " id='list-nav' data-state="disabled">List</div>
     </div>
-
-    <section>
-
-    </section>
-    <!-- <div class="recipe-list-full flex flex-col overflow-y-auto min-h-0 flex-1 p-2">
-      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
-      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
-      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
-      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
-      <div class="recipe-search-item p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates tenetur quos natus doloremque ducimus?</div>
-    </div> -->
+    
+    <div class = "section-body">
+      <div class = "shopping-list">
+        <div class="flex justify-between">
+          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
+          <label for="list${id}" id="label-list${id}">${item}</label>
+          <span id="span-${id}" class="hover:bg-cyan-900/80 rounded-xl">🗑</span>
+        </div>
+        <div class= "flex justify-between">
+          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
+          <label for="list${id}" id="label-list${id}">${item}</label>
+          <span id="span-${id}">🗑</span>
+        </div>
+        <div class= "flex justify-between">
+          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
+          <label for="list${id}" id="label-list${id}">${item}</label>
+          <span id="span-${id}">🗑</span>
+        </div>
+        <div class= "flex justify-between">
+          <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
+          <label for="list${id}" id="label-list${id}">${item}</label>
+          <span id="span-${id}">🗑</span>
+        </div>
+      </div>
+      <div class="list-action-bar w-full flex justify-between items-stretch text-center">
+        <div class="rounded-l-xl border-r">Save</div>
+        <div class="border-r">Delete</div>
+        <div class="rounded-r-xl">Share</div>
+      </div>
+    </div>
+    <!-- <section class = "section-body">
+    </section> -->
   </div>
 </div>
 </body>
