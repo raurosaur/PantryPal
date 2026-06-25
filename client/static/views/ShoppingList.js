@@ -1,5 +1,17 @@
 import AbstractView from "./AbstractView"
 
+function list_item(id, item){
+  if (!id || !item){
+    throw Error("Missing params");
+  }
+  return `
+    <div class= "flex justify-between">
+      <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
+      <label for="list${id}" id="${id}">${item}</label>
+      <span id="span-${id}" class="del-list-item-btn">🗑</span>
+    </div>
+  `;
+}
 
 export default class extends AbstractView{
     constructor(search){
@@ -8,35 +20,21 @@ export default class extends AbstractView{
     }
 
     async getHtml(){
-        const id=0;
-        const item = "chicken";
+        document.querySelector('#recipe-nav').dataset.state = "disabled"
+        document.querySelector('#list-nav').dataset.state = "active"
+        
+        let items = JSON.parse(sessionStorage.getItem("shop-list") ?? localStorage.getItem("shop-list")) ?? {1:"onion",2:"garlic",3:"chicken"};
+  
+        sessionStorage.setItem("shop-list", JSON.stringify(items));
+        // console.log(items)
         return `
               <div class = "shopping-list">
-                <div class="flex justify-between">
-                  <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-                  <label for="list${id}" id="label-list${id}">${item}</label>
-                  <span id="span-${id}" class="hover:bg-cyan-900/80 rounded-xl">🗑</span>
-                </div>
-                <div class= "flex justify-between">
-                  <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-                  <label for="list${id}" id="label-list${id}">${item}</label>
-                  <span id="span-${id}">🗑</span>
-                </div>
-                <div class= "flex justify-between">
-                  <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-                  <label for="list${id}" id="label-list${id}">${item}</label>
-                  <span id="span-${id}">🗑</span>
-                </div>
-                <div class= "flex justify-between">
-                  <input type="checkbox" name="list${id}" id = "list${id}" class="peer">
-                  <label for="list${id}" id="label-list${id}">${item}</label>
-                  <span id="span-${id}">🗑</span>
-                </div>
+                ${Object.entries(items).map(x => list_item(x[0],x[1])).join("")}
               </div>
               <div class="list-action-bar w-full flex justify-between items-stretch text-center">
-                <div class="rounded-l-xl border-r">Save</div>
-                <div class="border-r">Delete</div>
-                <div class="rounded-r-xl">Share</div>
+                <div class="rounded-l-xl border-r" id="save-list-btn">Save</div>
+                <div class="border-r" id="del-list-btn">Delete</div>
+                <div class="rounded-r-xl" id="share-btn">Share</div>
               </div>
         `;
     }

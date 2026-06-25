@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (e.target.id === "search-recipe" || e.target.id === "recipe-nav"){
             e.preventDefault();
-            // console.log(e.target);
             let ref = e.target.dataset.href;
             let input = document.querySelector('#recipe-search-bar').value.trim();
             if (input) {
@@ -70,6 +69,22 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             navigateTo(ref);
         }  
+        else if (e.target.id === "save-list-btn"){
+            if (sessionStorage.getItem("shop-list"))
+                localStorage.setItem("shop-list", sessionStorage.getItem("shop-list"));
+        }
+        else if (e.target.classList.contains("del-list-item-btn")){
+            const id = e.target.id.substring(5);
+            e.target.parentElement.remove();
+            const items = JSON.parse(sessionStorage.getItem("shop-list"));
+            delete items[id];
+            sessionStorage.setItem("shop-list", JSON.stringify(items));
+        }
+        else if (e.target.id === "del-list-btn"){
+            localStorage.removeItem("shop-list");
+            sessionStorage.removeItem("shop-list");
+            document.querySelector("div.shopping-list").innerHTML = "";
+        }
     });
 
     router();

@@ -10,24 +10,31 @@ export default class extends AbstractView{
     }
 
     async getHtml(){
+        
+        document.querySelector('#recipe-nav').dataset.state = "active"
+        document.querySelector('#list-nav').dataset.state = "disabled"
+        
         if (!location.search){
            return ` <div class="recipe-list-full">
         </div>`
         }
-        let req = `https://api.edamam.com/api/recipes/v2?type=public&${location.search.substring(1)}&app_id=${ID}&app_key=${KEY}`;
-        
-        const response = await fetch(req); 
 
-        
-        const resBody  = await response.json();
-        
-        document.querySelector('#recipe-nav').dataset.state = "active"
-        document.querySelector('#list-nav').dataset.state = "disabled"
+        let hits = JSON.parse(sessionStorage.getItem(location.search));
 
-        console.log(resBody)
+        if(!hits){
+            console.log("Making API calls");
+            let req = `https://api.edamam.com/api/recipes/v2?type=public&${location.search.substring(1)}&app_id=${ID}&app_key=${KEY}`;
+            
+            const response = await fetch(req); 
+    
+            
+            const resBody  = await response.json();
+            hits = resBody["hits"];
+            sessionStorage.setItem(location.search, JSON.stringify(hits));
+        }
+
+
         let innerHTML = "";
-        const hits = resBody["hits"];
-        console.log(resBody)
         hits.forEach((hit,i) => {
             innerHTML += `<div class = "recipe-search-item" search-index=${i}>${hit.recipe.label} - ${hit.recipe.source}</div>`;
         });
