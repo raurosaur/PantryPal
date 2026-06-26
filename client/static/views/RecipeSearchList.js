@@ -15,12 +15,12 @@ export default class extends AbstractView{
         document.querySelector('#list-nav').dataset.state = "disabled"
         document.querySelector('#rtab-nav').dataset.state = "disabled"
         
-        if (!location.search){
+        if (!window.sessionStorage.getItem("current") && !location.search){
            return ` <div class="recipe-list-full">
         </div>`
         }
 
-        let hits = JSON.parse(sessionStorage.getItem(location.search));
+        let hits = JSON.parse(sessionStorage.getItem("current"))?.hits;
 
         if(!hits){
             console.log("Making API calls");
@@ -31,7 +31,7 @@ export default class extends AbstractView{
             
             const resBody  = await response.json();
             hits = resBody["hits"];
-            sessionStorage.setItem(location.search, JSON.stringify(hits));
+            sessionStorage.setItem("current", JSON.stringify({query:location.search, hits: hits}));
         }
 
 

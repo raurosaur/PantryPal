@@ -45,3 +45,7 @@ div.recipe-search-item{
 .list-action-bar>*{
  @apply flex-1 bg-amber-600 p-2 border-t border-cyan-300/20 hover:bg-amber-100/30 cursor-pointer;
 }
+
+.ingredient-list>li{
+  @apply hover:bg-amber-100/30 p-1 px-4 my-0.5 rounded-xl w-fit cursor-pointer;
+}

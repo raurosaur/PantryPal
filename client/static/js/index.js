@@ -114,5 +114,12 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     });
 
+    document.body.addEventListener("dblclick", (e)=>{
+        if (e.target.classList.contains("ing-li")){
+            let shoplist = JSON.parse(window.sessionStorage.getItem("shop-list") ?? window.localStorage.getItem("shop-list")) ?? [];
+            shoplist[new Date().toISOString()]=e.target.innerText;
+            window.sessionStorage.setItem("shop-list", JSON.stringify(shoplist));
+        }
+    })
     router();
 });
