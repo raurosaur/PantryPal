@@ -22,6 +22,7 @@ export default class extends AbstractView{
     async getHtml(){
         document.querySelector('#recipe-nav').dataset.state = "disabled"
         document.querySelector('#list-nav').dataset.state = "active"
+        document.querySelector('#rtab-nav').dataset.state = "disabled"
         
         let items = JSON.parse(sessionStorage.getItem("shop-list") ?? localStorage.getItem("shop-list")) ?? {1:"onion",2:"garlic",3:"chicken"};
   

@@ -1,7 +1,7 @@
 import AbstractView from "./AbstractView";
 
-const KEY = "17a117cc72203109eacfce3afae1487f";
-const ID  = "d66e5273";
+const ID = import.meta.env.VITE_API_ID;
+const KEY = import.meta.env.VITE_API_KEY;
 
 export default class extends AbstractView{
     constructor(search){
@@ -13,6 +13,7 @@ export default class extends AbstractView{
         
         document.querySelector('#recipe-nav').dataset.state = "active"
         document.querySelector('#list-nav').dataset.state = "disabled"
+        document.querySelector('#rtab-nav').dataset.state = "disabled"
         
         if (!location.search){
            return ` <div class="recipe-list-full">
@@ -36,7 +37,7 @@ export default class extends AbstractView{
 
         let innerHTML = "";
         hits.forEach((hit,i) => {
-            innerHTML += `<div class = "recipe-search-item" search-index=${i}>${hit.recipe.label} - ${hit.recipe.source}</div>`;
+            innerHTML += `<div class = "recipe-search-item" search-index=${i} data-label=${hit.recipe.uri}>${hit.recipe.label} - ${hit.recipe.source}</div>`;
         });
         if(hits.length === 0)
             innerHTML += `<div style="recipe-search-item"> Search returned no result ☹️. Try Again!</div>`

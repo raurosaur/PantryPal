@@ -1,6 +1,7 @@
 import AbstractView from "../views/AbstractView";
 import Dashboard from "../views/Dashboard";
 import RecipeSearchList from "../views/RecipeSearchList";
+import RecipeView from "../views/RecipeView";
 import ShoppingList from  "../views/ShoppingList";
 
 const navigateTo = url => {
@@ -24,17 +25,15 @@ function pathMatches(pattern, path) {
 const router = async () => {
     const routes = [
         {path: "/" , view: AbstractView},
-        // {path: "/recipe" , view: () => {console.log("2")}},
+        {path: "/recipe" , view: RecipeView},
         {path: "/recipe-search" , view: RecipeSearchList},
-        //recipe
-        //
         {path: "/list" , view: ShoppingList}
     ];
 
     const potentialMatches = routes.map( route => {
         return {
             route,
-            isMatch: location.pathname == route.path
+            isMatch: location.pathname === route.path
         };
     });
 
@@ -54,13 +53,11 @@ const router = async () => {
     // console.log(match.route.view());
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.addEventListener("click", e => {
-        if (e.target.id === "list-nav" ){
-            e.preventDefault();
-            navigateTo(e.target.dataset.href);
-        }
-        else if (e.target.id === "search-recipe" || e.target.id === "recipe-nav"){
+
+document.addEventListener("DOMContentLoaded", async() => {
+    // sessionStorage.clear()
+    document.body.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("nav-bar") || e.target.id === "search-recipe"){
             e.preventDefault();
             let ref = e.target.dataset.href;
             let input = document.querySelector('#recipe-search-bar').value.trim();
@@ -84,6 +81,36 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.removeItem("shop-list");
             sessionStorage.removeItem("shop-list");
             document.querySelector("div.shopping-list").innerHTML = "";
+        }
+        else if(e.target.className === "recipe-search-item"){
+            e.preventDefault();
+
+            const uri = e.target.dataset.label;
+
+            const KEY = import.meta.env.VITE_API_KEY;
+            const ID = import.meta.env.VITE_API_ID;
+
+            const query = new URLSearchParams({
+                type: "public",
+                uri,
+                app_id: ID,
+                app_key: KEY,
+            });
+
+            const res = await fetch(
+                `https://api.edamam.com/api/recipes/v2/by-uri?${query}`
+            );
+
+            if (!res.ok) {
+                throw new Error(`Edamam request failed: ${res.status}`);
+            }
+
+            const recipe = await res.json();
+
+            window.sessionStorage.setItem("recipe", JSON.stringify(recipe.hits[0].recipe));
+            document.querySelector('#rtab-nav').classList.remove("hidden");
+           
+            navigateTo("/recipe");
         }
     });
 
