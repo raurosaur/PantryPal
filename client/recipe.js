@@ -1,4 +1,4 @@
-export class Recipe{
+export default class Recipe{
 
   constructor(jsonObj){
     if(jsonObj !== undefined){
@@ -24,7 +24,7 @@ export class Recipe{
   }
 
   //saves recipe to local storage
-  saveToLocalStorage(){
+  save(){
     window.localStorage.setItem("recipe", JSON.stringify({
       url : this.url,
       label : this.label,

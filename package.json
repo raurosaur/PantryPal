@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "client/static/js/index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongodb": "^5.7.0",
-    "morgan": "^1.10.0",
-    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "tailwindcss": "^4.3.1",
+    "vite": "^8.1.0"
   }
 }

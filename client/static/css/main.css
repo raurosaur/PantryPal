@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  /* ... */
+}
+
+body {
+  background-color: #022329;
+}
+
+@layer base {
+  .font-outline-1 {
+    -webkit-text-stroke: 1px black;
+  }
+  .font-outline-4 {
+    -webkit-text-stroke: 4px black;
+  }
+}
+
+div.recipe-search-item{
+  @apply p-2 bg-teal-400/25 hover:bg-fuchsia-100/20 rounded-2xl m-1 cursor-pointer;
+}
+
+.nav-bar{
+  @apply data-[state=active]:bg-cyan-300/40 flex-1 border-b border-cyan-300/20 bg-cyan-300/10 p-2 text-center text-2xl font-extrabold hover:bg-cyan-300/20;
+}
+
+.section-body{
+  @apply flex flex-col overflow-y-auto min-h-0 flex-1 p-2 text-cyan-50 justify-between;
+  
+}
+
+.shopping-list>div{
+  @apply p-2 rounded-2xl hover:bg-cyan-300/30 cursor-pointer accent-orange-400 checked:line-through;
+}
+
+.shopping-list>div>*{
+  @apply p-1;
+}
+
+.shopping-list>div>label{
+  @apply peer-checked:line-through peer-checked:text-cyan-50/50 min-w-1/2 text-center;
+}
+
+.list-action-bar>*{
+ @apply flex-1 bg-amber-600 p-2 border-t border-cyan-300/20 hover:bg-amber-100/30 cursor-pointer;
+}
+
+.ingredient-list>li{
+  @apply hover:bg-amber-100/30 p-1 px-4 my-0.5 rounded-xl w-fit cursor-pointer;
+}
