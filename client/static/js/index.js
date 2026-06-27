@@ -28,11 +28,11 @@ const router = async () => {
         {path: "/recipe-search" , view: RecipeSearchList},
         {path: "/list" , view: ShoppingList}
     ];
-
+    const curr = location.hash?.replace("#", "").split("?")[0] ?? "/";
     const potentialMatches = routes.map( route => {
         return {
             route,
-            isMatch: location.pathname === route.path
+            isMatch: curr === route.path
         };
     });
 
