@@ -1,4 +1,3 @@
-import AbstractView from "../views/AbstractView";
 import Dashboard from "../views/Dashboard";
 import RecipeSearchList from "../views/RecipeSearchList";
 import RecipeView from "../views/RecipeView";
@@ -24,7 +23,7 @@ function pathMatches(pattern, path) {
 
 const router = async () => {
     const routes = [
-        {path: "/" , view: AbstractView},
+        {path: "/" , view: Dashboard},
         {path: "/recipe" , view: RecipeView},
         {path: "/recipe-search" , view: RecipeSearchList},
         {path: "/list" , view: ShoppingList}
@@ -121,5 +120,18 @@ document.addEventListener("DOMContentLoaded", async() => {
             window.sessionStorage.setItem("shop-list", JSON.stringify(shoplist));
         }
     })
+
+    document.body.addEventListener("keydown", e => {
+        if(e.key === "Enter" && document.querySelector('#recipe-search-bar').value){
+            e.preventDefault();
+            let ref = 'recipe-search';
+            let input = document.querySelector('#recipe-search-bar').value.trim();
+            if (input) {
+                ref += `?q=${encodeURIComponent(input)}`;
+            }
+            navigateTo(ref);
+        }
+    });
+
     router();
 });

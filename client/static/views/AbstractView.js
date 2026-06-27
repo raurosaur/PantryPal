@@ -3,7 +3,7 @@ export default class{
 
     }
 
-    setTitle(title){
+    setTitle(title="PantryPal"){
         document.title = title;
     }
 

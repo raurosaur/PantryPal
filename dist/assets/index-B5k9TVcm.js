@@ -1,0 +1,35 @@
+(function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin===`use-credentials`?t.credentials=`include`:e.crossOrigin===`anonymous`?t.credentials=`omit`:t.credentials=`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})();var e=class{constructor(){}setTitle(e=`PantryPal`){document.title=e}async getHtml(){return``}},t=class extends e{constructor(){super(),this.setTitle(`PantryPal`)}async getHtml(){return`
+        
+        `}},n=`d66e5273`,r=`17a117cc72203109eacfce3afae1487f`,i=class extends e{constructor(e){super(),this.setTitle(`Recipes`)}async getHtml(){if(document.querySelector(`#recipe-nav`).dataset.state=`active`,document.querySelector(`#list-nav`).dataset.state=`disabled`,document.querySelector(`#rtab-nav`).dataset.state=`disabled`,!window.sessionStorage.getItem(`current`)&&!location.search)return` <div class="recipe-list-full">
+        </div>`;let e=JSON.parse(sessionStorage.getItem(`current`))?.hits;if(!e){console.log(`Making API calls`);let t=`https://api.edamam.com/api/recipes/v2?type=public&${location.search.substring(1)}&app_id=${n}&app_key=${r}`;e=(await(await fetch(t)).json()).hits,sessionStorage.setItem(`current`,JSON.stringify({query:location.search,hits:e}))}let t=``;return e.forEach((e,n)=>{t+=`<div class = "recipe-search-item" search-index=${n} data-label=${e.recipe.uri}>${e.recipe.label} - ${e.recipe.source}</div>`}),e.length===0&&(t+=`<div style="recipe-search-item"> Search returned no result ☹️. Try Again!</div>`),`
+        <div class="recipe-list-full">
+            ${t}
+        </div>
+        `}},a=class extends e{constructor(){super();let e=JSON.parse(window.sessionStorage.getItem(`recipe`));e!=null&&(this.url=e.url,this.label=e.label,this.image=e.image,this.ingredients=e.ingredients,this.calories=e.calories,this.cuisine=e.cuisine,this.mealType=e.mealType,this.source=e.source,this.setTitle(this.label),console.log(e))}getHtml(){return document.querySelector(`#recipe-nav`).dataset.state=`disabled`,document.querySelector(`#list-nav`).dataset.state=`disabled`,document.querySelector(`#rtab-nav`).dataset.state=`active`,document.querySelector(`#rtab-nav`).innerText=this.label.substring(0,10)+`...`,`
+      <h3 id = "label" class="text-5xl text-orange-500"> ${this.label}</h3>
+      <div id = "source" class="text-xl"> ${this.source}</div>
+      <span class="w-full flex justify-center p-10"><img src= "${this.image}"  class="w-1/3 rounded-xl" alt="Picture of ${this.label}"></span>
+      <div id = "ingredients" class="p-2">
+        <h4 class="text-2xl text-orange-500">Ingredients</h4>
+        <ul class="ml-4 ingredient-list">
+          ${this.ingredients.map(e=>`<li class="ing-li" title="double click to add to shopping list">${e.text}</li>`).join(``)}
+        </ul>
+      </div>
+      <div id = "calories"><strong class="text-orange-500">Calories:</strong> ${Math.round(this.calories)} kcal</div>
+      <span><strong class="text-orange-500">  Link: </strong><a href="${this.url}" id="url" target="_blank" rel="noopener noreferrer"> Full Recipe! </a></span>
+    `}};function o(e,t){if(!e||!t)throw Error(`Missing params`);return`
+    <div class= "flex justify-between">
+      <input type="checkbox" name="list${e}" id = "list${e}" class="peer">
+      <label for="list${e}" id="${e}">${t}</label>
+      <span id="span-${e}" class="del-list-item-btn">🗑</span>
+    </div>
+  `}var s=class extends e{constructor(e){super(),this.setTitle(`Shopping List`)}async getHtml(){document.querySelector(`#recipe-nav`).dataset.state=`disabled`,document.querySelector(`#list-nav`).dataset.state=`active`,document.querySelector(`#rtab-nav`).dataset.state=`disabled`;let e=JSON.parse(sessionStorage.getItem(`shop-list`)??localStorage.getItem(`shop-list`))??{1:`onion`,2:`garlic`,3:`chicken`};return sessionStorage.setItem(`shop-list`,JSON.stringify(e)),`
+              <div class = "shopping-list">
+                ${Object.entries(e).map(e=>o(e[0],e[1])).join(``)}
+              </div>
+              <div class="list-action-bar w-full flex justify-between items-stretch text-center">
+                <div class="rounded-l-xl border-r" id="save-list-btn">Save</div>
+                <div class="border-r" id="del-list-btn">Delete</div>
+                <div class="rounded-r-xl" id="share-btn">Share</div>
+              </div>
+        `}},c=e=>{history.pushState(null,null,e),l()},l=async()=>{let e=[{path:`/`,view:t},{path:`/recipe`,view:a},{path:`/recipe-search`,view:i},{path:`/list`,view:s}],n=e.map(e=>({route:e,isMatch:location.pathname===e.path})).find(e=>e.isMatch);n||={route:e[0],isMatch:!0};let r=await new n.route.view;document.querySelector(`section`).innerHTML=await r.getHtml()};document.addEventListener(`DOMContentLoaded`,async()=>{document.body.addEventListener(`click`,async e=>{if(e.target.classList.contains(`nav-bar`)||e.target.id===`search-recipe`){e.preventDefault();let t=e.target.dataset.href,n=document.querySelector(`#recipe-search-bar`).value.trim();n&&(t+=`?q=${encodeURIComponent(n)}`),c(t)}else if(e.target.id===`save-list-btn`)sessionStorage.getItem(`shop-list`)&&localStorage.setItem(`shop-list`,sessionStorage.getItem(`shop-list`));else if(e.target.classList.contains(`del-list-item-btn`)){let t=e.target.id.substring(5);e.target.parentElement.remove();let n=JSON.parse(sessionStorage.getItem(`shop-list`));delete n[t],sessionStorage.setItem(`shop-list`,JSON.stringify(n))}else if(e.target.id===`del-list-btn`)localStorage.removeItem(`shop-list`),sessionStorage.removeItem(`shop-list`),document.querySelector(`div.shopping-list`).innerHTML=``;else if(e.target.className===`recipe-search-item`){e.preventDefault();let t=e.target.dataset.label,n=new URLSearchParams({type:`public`,uri:t,app_id:`d66e5273`,app_key:`17a117cc72203109eacfce3afae1487f`}),r=await fetch(`https://api.edamam.com/api/recipes/v2/by-uri?${n}`);if(!r.ok)throw Error(`Edamam request failed: ${r.status}`);let i=await r.json();window.sessionStorage.setItem(`recipe`,JSON.stringify(i.hits[0].recipe)),document.querySelector(`#rtab-nav`).classList.remove(`hidden`),c(`/recipe`)}}),document.body.addEventListener(`dblclick`,e=>{if(e.target.classList.contains(`ing-li`)){let t=JSON.parse(window.sessionStorage.getItem(`shop-list`)??window.localStorage.getItem(`shop-list`))??[];t[new Date().toISOString()]=e.target.innerText,window.sessionStorage.setItem(`shop-list`,JSON.stringify(t))}}),document.body.addEventListener(`keydown`,e=>{if(e.key===`Enter`&&document.querySelector(`#recipe-search-bar`).value){e.preventDefault();let t=`recipe-search`,n=document.querySelector(`#recipe-search-bar`).value.trim();n&&(t+=`?q=${encodeURIComponent(n)}`),c(t)}}),l()});
