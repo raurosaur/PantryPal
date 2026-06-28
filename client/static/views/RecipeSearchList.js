@@ -22,9 +22,9 @@ export default class extends AbstractView{
         </div>`
         }
 
-        let hits = JSON.parse(sessionStorage.getItem("current"))?.hits;
+        let {hits, query} = JSON.parse(sessionStorage.getItem("current")) ?? {};
 
-        if(!hits || (search && sessionStorage.getItem("current").query !== search)){
+        if(!hits || (search && query !== search)){
             console.log("Making API calls");
             let req = `https://api.edamam.com/api/recipes/v2?type=public&${search}&app_id=${ID}&app_key=${KEY}`;
             
