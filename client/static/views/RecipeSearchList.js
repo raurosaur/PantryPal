@@ -15,23 +15,25 @@ export default class extends AbstractView{
         document.querySelector('#list-nav').dataset.state = "disabled"
         document.querySelector('#rtab-nav').dataset.state = "disabled"
         
-        if (!window.sessionStorage.getItem("current") && !location.search){
+        const search = location.hash?.replace("#", "").split("?")[1] ?? "";
+        
+        if (!window.sessionStorage.getItem("current") && !search){
            return ` <div class="recipe-list-full">
         </div>`
         }
 
         let hits = JSON.parse(sessionStorage.getItem("current"))?.hits;
 
-        if(!hits){
+        if(!hits || (search && sessionStorage.getItem("current").query !== search)){
             console.log("Making API calls");
-            let req = `https://api.edamam.com/api/recipes/v2?type=public&${location.search.substring(1)}&app_id=${ID}&app_key=${KEY}`;
+            let req = `https://api.edamam.com/api/recipes/v2?type=public&${search}&app_id=${ID}&app_key=${KEY}`;
             
             const response = await fetch(req); 
     
             
             const resBody  = await response.json();
             hits = resBody["hits"];
-            sessionStorage.setItem("current", JSON.stringify({query:location.search, hits: hits}));
+            sessionStorage.setItem("current", JSON.stringify({query:search, hits: hits}));
         }
 
 

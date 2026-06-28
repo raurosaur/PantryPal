@@ -44,7 +44,6 @@ const router = async () => {
             isMatch : true
         };
     }
-
     const view = await new match.route.view();
 
     document.querySelector('section').innerHTML = await view.getHtml();
@@ -63,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (input) {
                 ref += `?q=${encodeURIComponent(input)}`;
             }
+            // console.log(ref)
             navigateTo(ref);
         }  
         else if (e.target.id === "save-list-btn"){
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             window.sessionStorage.setItem("recipe", JSON.stringify(recipe.hits[0].recipe));
             document.querySelector('#rtab-nav').classList.remove("hidden");
            
-            navigateTo("/recipe");
+            navigateTo("#/recipe");
         }
     });
 
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     document.body.addEventListener("keydown", e => {
         if(e.key === "Enter" && document.querySelector('#recipe-search-bar').value){
             e.preventDefault();
-            let ref = 'recipe-search';
+            let ref = '/#/recipe-search';
             let input = document.querySelector('#recipe-search-bar').value.trim();
             if (input) {
                 ref += `?q=${encodeURIComponent(input)}`;
