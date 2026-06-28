@@ -15,7 +15,7 @@ export default class extends AbstractView{
         this.mealType = obj.mealType;
         this.source = obj.source;
         this.setTitle(this.label);
-        console.log(obj);
+        // console.log(obj);
     }
     
     getHtml(){
