@@ -51,12 +51,17 @@ const router = async () => {
     // console.log(match.route.view());
 };
 
-
+function displayBody(){
+    document.querySelector(".body-main").style.display = "flex";
+    document.querySelector("#header").style.flexDirection="row";
+}
 document.addEventListener("DOMContentLoaded", async() => {
     // sessionStorage.clear()
+
     document.body.addEventListener("click", async (e) => {
         if (e.target.classList.contains("nav-bar") || e.target.id === "search-recipe"){
             e.preventDefault();
+            displayBody();
             let ref = e.target.dataset.href;
             let input = document.querySelector('#recipe-search-bar').value.trim();
             if (input) {
@@ -124,6 +129,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     document.body.addEventListener("keydown", e => {
         if(e.key === "Enter" && document.querySelector('#recipe-search-bar').value){
             e.preventDefault();
+            displayBody();
             let ref = '/#/recipe-search';
             let input = document.querySelector('#recipe-search-bar').value.trim();
             if (input) {
