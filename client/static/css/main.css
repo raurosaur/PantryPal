@@ -57,3 +57,6 @@ div.recipe-search-item{
 .input-btn{
   @apply w-1/8 max-w-30 rounded-e-2xl bg-[#106978] p-2 my-1;
 }
+.flex-change{
+  @apply min-sm:flex-row;
+}

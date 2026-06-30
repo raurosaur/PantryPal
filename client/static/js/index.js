@@ -53,7 +53,7 @@ const router = async () => {
 
 function displayBody(){
     document.querySelector(".body-main").style.display = "flex";
-    document.querySelector("#header").style.flexDirection="row";
+    document.querySelector("#header").classList.add('flex-change');
 }
 document.addEventListener("DOMContentLoaded", async() => {
     // sessionStorage.clear()
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             displayBody();
             let ref = e.target.dataset.href;
             let input = document.querySelector('#recipe-search-bar').value.trim();
-            if (input) {
+            if (input && ref !== '/#/list') {
                 ref += `?q=${encodeURIComponent(input)}`;
             }
             // console.log(ref)
@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             navigateTo("#/recipe");
         }
         else if(e.target.id === 'share-btn'){
+            e.preventDefault();
             const items = []
             document.querySelectorAll('.shopping-list>div>label').forEach(x=>items.push(x.innerText));
             if(items){
@@ -133,6 +134,28 @@ document.addEventListener("DOMContentLoaded", async() => {
                     window.alert('Copied to clipboard');
                 }
             }
+        }
+        else if(e.target.id === 'load-list'){
+            e.preventDefault();
+            const ID = document.querySelector('#list-search-bar').value.trim();
+            console.log(ID)
+            if(ID){
+                const response = await fetch(`${BASE_API_URL}/lists/${ID}`,{
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (response.ok){
+                    displayBody();
+                    const {createdAt,id,items,expiresAt} = await response.json();
+                    navigateTo(`/#/list?id=${id}`);
+                    window.sessionStorage.setItem("shop-list", JSON.stringify(items));
+                    console.log(createdAt, expiresAt, id);
+                }
+                
+            }
+
         }
     });
 
