@@ -57,7 +57,7 @@ function displayBody(){
 }
 document.addEventListener("DOMContentLoaded", async() => {
     // sessionStorage.clear()
-
+    const BASE_API_URL = import.meta.env.VITE_API_URL;
     document.body.addEventListener("click", async (e) => {
         if (e.target.classList.contains("nav-bar") || e.target.id === "search-recipe"){
             e.preventDefault();
@@ -115,6 +115,24 @@ document.addEventListener("DOMContentLoaded", async() => {
             document.querySelector('#rtab-nav').classList.remove("hidden");
            
             navigateTo("#/recipe");
+        }
+        else if(e.target.id === 'share-btn'){
+            const items = []
+            document.querySelectorAll('.shopping-list>div>label').forEach(x=>items.push(x.innerText));
+            if(items){
+                const response = await fetch(`${BASE_API_URL}/lists`,{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({items}),
+                });
+                if (response.ok){
+                    const data = await response.json();
+                    navigator.clipboard.writeText(data.id);
+                    window.alert('Copied to clipboard');
+                }
+            }
         }
     });
 
