@@ -29,13 +29,17 @@ export default class extends AbstractView{
         sessionStorage.setItem("shop-list", JSON.stringify(items));
         // console.log(items)
         return `
-              <div class = "shopping-list">
+              <div class = "shopping-list flex-1">
                 ${Object.entries(items).map(x => list_item(x[0],x[1])).join("")}
               </div>
+              <div class="flex  w-full items-stretch">
+                <input type="text" class="input-bar flex-2" id="add-list-input" placeholder="Enter Item to Add to List"/>
+                <div class="list-btns my-1 ml-1 rounded-r-xl text-center" id="add-list-item-btn"> Add list item </div>
+              </div>
               <div class="list-action-bar w-full flex justify-between items-stretch text-center">
-                <div class="rounded-l-xl border-r" id="save-list-btn">Save</div>
-                <div class="border-r" id="del-list-btn">Delete</div>
-                <div class="rounded-r-xl" id="share-btn">Share</div>
+                <div class="rounded-l-xl border-r list-btns" id="save-list-btn">Save</div>
+                <div class="border-r mx-1 list-btns" id="del-list-btn">Delete</div>
+                <div class="rounded-r-xl list-btns" id="share-btn">Share</div>
               </div>
         `;
     }

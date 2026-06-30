@@ -57,6 +57,7 @@ function displayBody(){
 }
 document.addEventListener("DOMContentLoaded", async() => {
     // sessionStorage.clear()
+    // return;
     const BASE_API_URL = import.meta.env.VITE_API_URL;
     document.body.addEventListener("click", async (e) => {
         if (e.target.classList.contains("nav-bar") || e.target.id === "search-recipe"){
@@ -156,6 +157,18 @@ document.addEventListener("DOMContentLoaded", async() => {
                 
             }
 
+        }
+        else if(e.target.id === 'add-list-item-btn'){
+            const input_bar = document.querySelector('#add-list-input');
+            const list_item = input_bar.value.trim();
+            if(list_item){
+                const currlist = JSON.parse(window.sessionStorage.getItem("shop-list")) ?? [];
+                currlist[new Date().toISOString()]=list_item;
+                window.sessionStorage.setItem("shop-list", JSON.stringify(currlist));
+                input_bar.value="";
+                navigateTo('/#/list')
+                // window.location.reload();
+            }
         }
     });
 
