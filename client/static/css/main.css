@@ -42,10 +42,21 @@ div.recipe-search-item{
   @apply peer-checked:line-through peer-checked:text-cyan-50/50 min-w-1/2 text-center;
 }
 
-.list-action-bar>*{
+.list-btns{
  @apply flex-1 bg-amber-600 p-2 border-t border-cyan-300/20 hover:bg-amber-100/30 cursor-pointer;
 }
 
 .ingredient-list>li{
   @apply hover:bg-amber-100/30 p-1 px-4 my-0.5 rounded-xl w-fit cursor-pointer;
+}
+
+.input-bar{
+  @apply w-1/2 rounded-s-xl bg-white p-2 text-black my-1;
+}
+
+.input-btn{
+  @apply w-1/8 max-w-30 rounded-e-2xl bg-[#106978] p-2 my-1;
+}
+.flex-change{
+  @apply min-sm:flex-row;
 }

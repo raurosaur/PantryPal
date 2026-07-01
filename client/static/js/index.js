@@ -51,15 +51,21 @@ const router = async () => {
     // console.log(match.route.view());
 };
 
-
+function displayBody(){
+    document.querySelector(".body-main").style.display = "flex";
+    document.querySelector("#header").classList.add('flex-change');
+}
 document.addEventListener("DOMContentLoaded", async() => {
     // sessionStorage.clear()
+    // return;
+    const BASE_API_URL = import.meta.env.VITE_API_URL;
     document.body.addEventListener("click", async (e) => {
         if (e.target.classList.contains("nav-bar") || e.target.id === "search-recipe"){
             e.preventDefault();
+            displayBody();
             let ref = e.target.dataset.href;
             let input = document.querySelector('#recipe-search-bar').value.trim();
-            if (input) {
+            if (input && ref !== '/#/list') {
                 ref += `?q=${encodeURIComponent(input)}`;
             }
             // console.log(ref)
@@ -111,6 +117,59 @@ document.addEventListener("DOMContentLoaded", async() => {
            
             navigateTo("#/recipe");
         }
+        else if(e.target.id === 'share-btn'){
+            e.preventDefault();
+            const items = []
+            document.querySelectorAll('.shopping-list>div>label').forEach(x=>items.push(x.innerText));
+            if(items){
+                const response = await fetch(`${BASE_API_URL}/lists`,{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({items}),
+                });
+                if (response.ok){
+                    const data = await response.json();
+                    navigator.clipboard.writeText(data.id);
+                    window.alert('Copied to clipboard');
+                }
+            }
+        }
+        else if(e.target.id === 'load-list'){
+            e.preventDefault();
+            const ID = document.querySelector('#list-search-bar').value.trim();
+            console.log(ID)
+            if(ID){
+                const response = await fetch(`${BASE_API_URL}/lists/${ID}`,{
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                if (response.ok){
+                    displayBody();
+                    const {createdAt,id,items,expiresAt} = await response.json();
+                    navigateTo(`/#/list?id=${id}`);
+                    window.sessionStorage.setItem("shop-list", JSON.stringify(items));
+                    console.log(createdAt, expiresAt, id);
+                }
+                
+            }
+
+        }
+        else if(e.target.id === 'add-list-item-btn'){
+            const input_bar = document.querySelector('#add-list-input');
+            const list_item = input_bar.value.trim();
+            if(list_item){
+                const currlist = JSON.parse(window.sessionStorage.getItem("shop-list")) ?? [];
+                currlist[new Date().toISOString()]=list_item;
+                window.sessionStorage.setItem("shop-list", JSON.stringify(currlist));
+                input_bar.value="";
+                navigateTo('/#/list')
+                // window.location.reload();
+            }
+        }
     });
 
     document.body.addEventListener("dblclick", (e)=>{
@@ -124,6 +183,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     document.body.addEventListener("keydown", e => {
         if(e.key === "Enter" && document.querySelector('#recipe-search-bar').value){
             e.preventDefault();
+            displayBody();
             let ref = '/#/recipe-search';
             let input = document.querySelector('#recipe-search-bar').value.trim();
             if (input) {
